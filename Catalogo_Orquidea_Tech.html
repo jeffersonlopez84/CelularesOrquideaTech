@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101a36">
+  <meta name="description" content="Catálogo mayorista Orquidea Tech: fundas para iPhone con diseños para distintos estilos y modelos.">
+  <title>Catálogo mayorista | Orquidea Tech</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #151c31;
+      --navy: #101a36;
+      --blue: #244db5;
+      --blue-soft: #edf1ff;
+      --gold: #e6c85a;
+      --paper: #f8f8f5;
+      --white: #fff;
+      --muted: #73798b;
+      --line: #e8e8e4;
+      --shadow: 0 18px 55px rgba(19, 28, 54, .09);
+      --serif: Georgia, "Times New Roman", serif;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--paper); color: var(--ink); }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; }
+
+    .topbar {
+      height: 76px;
+      padding: 0 max(5vw, calc((100vw - 1240px) / 2));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      background: rgba(255,255,255,.94);
+      border-bottom: 1px solid var(--line);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .brand img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+    .brand-name { font-size: 12px; font-weight: 800; letter-spacing: .18em; }
+    .brand-sub { display: block; margin-top: 4px; color: var(--muted); font-size: 10px; letter-spacing: .12em; }
+    .nav { display: flex; align-items: center; gap: 26px; color: #565d70; font-size: 13px; }
+    .nav a { text-decoration: none; }
+    .nav a:hover { color: var(--blue); }
+    .nav .nav-cta { padding: 11px 16px; border-radius: 5px; background: var(--navy); color: white; }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: var(--navy);
+      color: white;
+    }
+    .hero::before, .hero::after {
+      position: absolute;
+      content: "";
+      border: 1px solid rgba(230,200,90,.24);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero::before { width: 680px; height: 680px; right: -150px; top: -370px; }
+    .hero::after { width: 500px; height: 500px; right: -55px; top: -280px; }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: min(1240px, 90%);
+      min-height: 490px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      align-items: center;
+      gap: 5%;
+      padding: 64px 0;
+    }
+    .eyebrow { color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; }
+    h1 {
+      max-width: 650px;
+      margin: 18px 0;
+      font: 400 clamp(42px, 5.8vw, 76px)/1.02 var(--serif);
+      letter-spacing: -.04em;
+    }
+    .hero-copy { max-width: 510px; color: #d8dceb; font-size: 16px; line-height: 1.75; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .button {
+      min-height: 46px;
+      padding: 0 19px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-decoration: none;
+      transition: transform .2s, background .2s;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button-gold { background: var(--gold); color: var(--navy); }
+    .button-outline { border-color: rgba(255,255,255,.35); color: white; background: transparent; }
+    .hero-art {
+      position: relative;
+      width: min(100%, 450px);
+      height: 340px;
+      justify-self: end;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 48% 48% 8px 8px;
+      background: #182343;
+      overflow: hidden;
+    }
+    .hero-art img { width: 100%; height: 100%; object-fit: cover; opacity: .88; }
+    .hero-art-label {
+      position: absolute;
+      right: 14px;
+      bottom: 14px;
+      left: 14px;
+      padding: 15px 18px;
+      background: rgba(16,26,54,.82);
+      color: white;
+      font: 18px var(--serif);
+    }
+
+    .trust-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-bottom: 1px solid var(--line);
+      background: white;
+    }
+    .trust-item { padding: 24px 12px; text-align: center; }
+    .trust-item + .trust-item { border-left: 1px solid var(--line); }
+    .trust-item strong { display: block; font: 26px var(--serif); color: var(--navy); }
+    .trust-item span { display: block; margin-top: 5px; color: var(--muted); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+
+    .section { width: min(1240px, 90%); margin: auto; padding: 84px 0; }
+    .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 30px; }
+    .section-kicker { margin-bottom: 10px; color: var(--blue); font-size: 10px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; }
+    h2 { margin: 0; color: var(--navy); font: 400 clamp(30px, 4vw, 46px)/1.1 var(--serif); letter-spacing: -.025em; }
+    .section-intro { max-width: 450px; margin: 12px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+    .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .search-wrap { position: relative; }
+    .search-wrap::before { position: absolute; content: "⌕"; top: 7px; left: 13px; color: #747b8b; font-size: 22px; }
+    .search, .sort {
+      height: 42px;
+      border: 1px solid #dedfe5;
+      border-radius: 4px;
+      background: white;
+      color: var(--ink);
+      font-size: 12px;
+    }
+    .search { width: min(260px, 68vw); padding: 0 12px 0 38px; outline-color: var(--blue); }
+    .sort { padding: 0 30px 0 12px; }
+    .result-count { min-height: 18px; margin: -15px 0 20px; color: var(--muted); font-size: 11px; }
+
+    .collection-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+    .card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: white;
+      box-shadow: 0 5px 22px rgba(19,28,54,.035);
+      transition: transform .22s, box-shadow .22s;
+    }
+    .card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .card-image { position: relative; height: 265px; overflow: hidden; background: #f1f1ef; }
+    .card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+    .card:hover .card-image img { transform: scale(1.04); }
+    .box-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      padding: 7px 10px;
+      border: 1px solid rgba(255,255,255,.55);
+      border-radius: 3px;
+      background: rgba(255,255,255,.92);
+      color: var(--navy);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .card-body { padding: 19px 20px 18px; }
+    .card-topline { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .model-count { color: var(--muted); font-size: 10px; }
+    .card h3 { margin: 10px 0 8px; font: 22px/1.15 var(--serif); color: var(--navy); }
+    .card-description { min-height: 40px; margin: 0; color: #6b7080; font-size: 12px; line-height: 1.65; }
+    .card-bottom { display: flex; justify-content: space-between; align-items: end; gap: 8px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+    .price-label { color: var(--muted); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+    .price { display: block; margin-top: 3px; color: var(--navy); font: 25px var(--serif); }
+    .details-button {
+      padding: 10px 11px;
+      border: 0;
+      border-radius: 3px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+    .details-button:hover { background: var(--blue); color: white; }
+    .empty-state { grid-column: 1 / -1; padding: 50px 20px; border: 1px dashed #cfd2dc; color: var(--muted); text-align: center; }
+    .price-note { margin: 22px 0 0; color: var(--muted); font-size: 11px; line-height: 1.6; }
+
+    .wholesale {
+      background: #f0f1f6;
+      border-top: 1px solid #e7e8ee;
+      border-bottom: 1px solid #e7e8ee;
+    }
+    .wholesale-inner { width: min(1240px, 90%); margin: auto; padding: 68px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .wholesale-copy p { max-width: 500px; margin: 16px 0 0; color: #6c7180; font-size: 14px; line-height: 1.8; }
+    .process { display: grid; gap: 15px; }
+    .process-step { display: grid; grid-template-columns: 38px 1fr; gap: 13px; align-items: start; }
+    .step-number { width: 34px; height: 34px; display: grid; place-items: center; border: 1px solid #d8c46b; border-radius: 50%; color: var(--navy); font: 17px var(--serif); }
+    .process-step strong { display: block; margin: 2px 0 4px; color: var(--navy); font-size: 12px; }
+    .process-step span { color: var(--muted); font-size: 11px; line-height: 1.6; }
+
+    .footer { padding: 28px 5%; background: var(--navy); color: #d8dceb; }
+    .footer-inner { width: min(1240px, 100%); margin: auto; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+    .footer-brand { display: flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 800; letter-spacing: .13em; }
+    .footer-brand img { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; }
+    .footer-note { color: #aeb6ca; font-size: 10px; text-align: right; line-height: 1.6; }
+
+    .modal[hidden] { display: none; }
+    .modal { position: fixed; z-index: 10; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(9,15,32,.74); }
+    .modal-panel { position: relative; width: min(900px, 100%); max-height: min(90vh, 850px); overflow: auto; border-radius: 8px; background: white; box-shadow: 0 25px 90px rgba(0,0,0,.28); }
+    .modal-close { position: sticky; z-index: 2; top: 12px; float: right; width: 38px; height: 38px; margin: 12px 12px -50px 0; border: 0; border-radius: 50%; background: white; color: var(--navy); font-size: 23px; box-shadow: 0 2px 15px rgba(0,0,0,.12); }
+    .modal-hero { display: grid; grid-template-columns: .9fr 1.1fr; min-height: 300px; background: var(--navy); color: white; }
+    .modal-hero img { width: 100%; height: 100%; min-height: 300px; max-height: 380px; object-fit: cover; }
+    .modal-summary { align-self: center; padding: 38px; }
+    .modal-summary .eyebrow { font-size: 9px; }
+    .modal-summary h2 { margin: 12px 0; color: white; font-size: 36px; }
+    .modal-summary p { color: #d8dceb; font-size: 13px; line-height: 1.7; }
+    .modal-meta { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 20px; }
+    .modal-meta span { color: #c8cee0; font-size: 10px; }
+    .modal-meta strong { display: block; margin-bottom: 4px; color: var(--gold); font: 22px var(--serif); }
+    .modal-content { padding: 30px 36px 36px; }
+    .modal-content h3 { margin: 0 0 6px; color: var(--navy); font: 23px var(--serif); }
+    .modal-content > p { margin: 0 0 20px; color: var(--muted); font-size: 11px; line-height: 1.6; }
+    .model-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .model-item { overflow: hidden; border: 1px solid var(--line); border-radius: 5px; background: #fff; }
+    .model-item img { display: block; width: 100%; height: 132px; object-fit: cover; background: #f1f1ef; }
+    .model-item span { display: block; padding: 10px 8px; color: var(--navy); font-size: 10px; font-weight: 700; text-align: center; }
+    .modal-disclaimer { margin: 22px 0 0 !important; padding: 12px 14px; border-left: 2px solid var(--gold); background: #fbf9ef; color: #6c6652 !important; font-size: 10px !important; }
+    .no-scroll { overflow: hidden; }
+
+    @media (max-width: 900px) {
+      .hero-inner { min-height: 430px; grid-template-columns: 1fr .8fr; }
+      .hero-art { height: 290px; }
+      .section-heading { align-items: start; flex-direction: column; }
+      .collection-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .wholesale-inner { gap: 32px; }
+    }
+    @media (max-width: 600px) {
+      .topbar { height: 64px; padding: 0 5%; }
+      .brand img { width: 40px; height: 40px; }
+      .nav { gap: 12px; font-size: 11px; }
+      .nav a:not(.nav-cta) { display: none; }
+      .nav .nav-cta { padding: 10px 12px; }
+      .hero-inner { width: 88%; min-height: 0; grid-template-columns: 1fr; padding: 62px 0 36px; }
+      h1 { font-size: 48px; }
+      .hero-copy { font-size: 14px; }
+      .hero-art { width: 100%; height: 240px; margin-top: 8px; justify-self: stretch; border-radius: 100px 100px 6px 6px; }
+      .trust-item { padding: 18px 5px; }
+      .trust-item strong { font-size: 22px; }
+      .trust-item span { font-size: 8px; letter-spacing: .06em; }
+      .section { width: 88%; padding: 58px 0; }
+      .controls { width: 100%; }
+      .search-wrap { flex: 1; }
+      .search { width: 100%; }
+      .sort { flex: 1; }
+      .collection-grid { grid-template-columns: 1fr; gap: 15px; }
+      .card-image { height: 270px; }
+      .card-description { min-height: 0; }
+      .wholesale-inner { width: 88%; grid-template-columns: 1fr; gap: 30px; padding: 52px 0; }
+      .footer-inner { align-items: start; flex-direction: column; }
+      .footer-note { text-align: left; }
+      .modal { padding: 10px; }
+      .modal-hero { grid-template-columns: 1fr; }
+      .modal-hero img { height: 230px; min-height: 230px; }
+      .modal-summary { padding: 24px; }
+      .modal-summary h2 { font-size: 30px; }
+      .modal-content { padding: 24px 18px; }
+      .model-grid { grid-template-columns: repeat(2, 1fr); }
+      .model-item img { height: 145px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+    @media print {
+      .topbar, .controls, .details-button, .hero-actions, .modal { display: none !important; }
+      body { background: white; }
+      .hero-inner { min-height: 290px; }
+      .hero-art { height: 220px; }
+      .section { padding: 35px 0; }
+      .collection-grid { grid-template-columns: repeat(2, 1fr); }
+      .card { break-inside: avoid; box-shadow: none; }
+      .card-image { height: 190px; }
+      .wholesale-inner { padding: 35px 0; }
+      .footer { print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Orquidea Tech, inicio">
+      <img src="Logo/logo%20orquidea%20tech.jpg" alt="Logo Orquidea Tech">
+      <span class="brand-name">ORQUIDEA TECH<span class="brand-sub">CELULARES + ESTUCHES</span></span>
+    </a>
+    <nav class="nav" aria-label="Navegación principal">
+      <a href="#colecciones">Colecciones</a>
+      <a href="#mayoristas">Información comercial</a>
+      <a class="nav-cta" href="#colecciones">Ver catálogo</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="eyebrow">Catálogo mayorista · Colección actual</div>
+          <h1>Diseños que conectan con cada estilo.</h1>
+          <p class="hero-copy">Una selección de fundas para iPhone pensada para ampliar tu vitrina con propuestas expresivas, elegantes y funcionales. Explora los diseños, consulta los modelos registrados y encuentra tu próxima colección favorita.</p>
+          <div class="hero-actions">
+            <a class="button button-gold" href="#colecciones">Explorar colecciones</a>
+            <button class="button button-outline" type="button" onclick="window.print()">Imprimir catálogo</button>
+          </div>
+        </div>
+        <div class="hero-art">
+          <img src="imagenes/Premium%20Fashion/iPhone%2015%20Pro.jpeg" alt="Diseño Premium Fashion para iPhone">
+          <div class="hero-art-label">Tecnología con personalidad.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust-row" aria-label="Resumen del catálogo">
+      <div class="trust-item"><strong>10</strong><span>Colecciones</span></div>
+      <div class="trust-item"><strong>56</strong><span>Referencias de modelo</span></div>
+      <div class="trust-item"><strong>13–17</strong><span>Generaciones iPhone registradas</span></div>
+    </section>
+
+    <section class="section" id="colecciones">
+      <div class="section-heading">
+        <div>
+          <div class="section-kicker">Encuentra tu estilo</div>
+          <h2>Colecciones destacadas</h2>
+          <p class="section-intro">Cada diseño incluye su concepto, precio mayorista registrado y modelos asociados. Abre una ficha para ver las referencias visuales una por una.</p>
+        </div>
+        <div class="controls">
+          <label class="search-wrap">
+            <input class="search" id="search" type="search" aria-label="Buscar colección o modelo de iPhone" placeholder="Buscar diseño o iPhone…" autocomplete="off">
+          </label>
+          <label>
+            <span class="sr-only" hidden>Ordenar colecciones</span>
+            <select class="sort" id="sort" aria-label="Ordenar colecciones">
+              <option value="featured">Orden recomendado</option>
+              <option value="name">Nombre A–Z</option>
+              <option value="price">Precio: menor a mayor</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <p class="result-count" id="result-count" aria-live="polite"></p>
+      <div class="collection-grid" id="collection-grid"></div>
+      <p class="price-note">Precios por mayor según la base del catálogo. La moneda y vigencia no están especificadas en el archivo fuente; confirma el valor antes de concretar tu pedido. La disponibilidad de inventario debe verificarse por separado.</p>
+    </section>
+
+    <section class="wholesale" id="mayoristas">
+      <div class="wholesale-inner">
+        <div class="wholesale-copy">
+          <div class="section-kicker">Para tu negocio</div>
+          <h2>Una selección clara para comprar mejor.</h2>
+          <p>Revisa el número de caja, compara referencias por modelo y arma una selección alineada con el estilo de tus clientes. La ficha de cada colección te ayuda a verificar qué modelos están registrados antes de solicitar disponibilidad.</p>
+        </div>
+        <div class="process" aria-label="Cómo consultar el catálogo">
+          <div class="process-step"><span class="step-number">1</span><div><strong>Elige un diseño</strong><span>Explora las fotografías y abre el detalle de la colección.</span></div></div>
+          <div class="process-step"><span class="step-number">2</span><div><strong>Confirma los modelos</strong><span>Compara cada referencia con el equipo de tus clientes.</span></div></div>
+          <div class="process-step"><span class="step-number">3</span><div><strong>Verifica precio e inventario</strong><span>Consulta vigencia, moneda y existencias antes de cerrar tu compra.</span></div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand"><img src="Logo/logo%20orquidea%20tech.jpg" alt=""><span>ORQUIDEA TECH</span></div>
+      <div class="footer-note">Catálogo de referencia para ventas mayoristas.<br>Modelos y precios sujetos a confirmación.</div>
+    </div>
+  </footer>
+
+  <div class="modal" id="detail-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal-panel">
+      <button class="modal-close" id="modal-close" type="button" aria-label="Cerrar detalle">×</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <script>
+    const collections = [
+      {
+        name: "Sticker Pop", box: 1, price: 1.75,
+        description: "Gráfica divertida y llena de personalidad para una vitrina joven, colorida y fácil de combinar.",
+        folder: "Sticker Pop",
+        models: [
+          ["iPhone 13 Pro", "iPhone 13 Pro.jpeg"], ["iPhone 14 Pro", "iPhone 14 Pro.jpeg"],
+          ["iPhone 15 Pro Max", "iPhone 15 Pro Max.jpeg"], ["iPhone 16 Pro", "iPhone 16 Pro.jpeg"],
+          ["iPhone 16 Normal", "iPhone 16.jpeg"], ["iPhone 17 Pro", "iPhone 17 Pro.jpeg"],
+          ["iPhone 17 Pro Max", "iPhone 17 Pro Max.jpeg"]
+        ]
+      },
+      {
+        name: "Cuero Bordado Flores", box: 2, price: 1.50,
+        description: "Inspiración floral de aire artesanal: un diseño delicado que aporta calidez y carácter.",
+        folder: "Cuero Bordado Flores",
+        models: [
+          ["iPhone 13 Pro", "iPhone 13 Pro.jpeg"], ["iPhone 14 Pro", "iPhone 14 Pro.jpeg"],
+          ["iPhone 15 Pro", "iPhone 15 Pro.jpeg"], ["iPhone 15 Pro Max", "iPhone 15 pro Max.jpeg"],
+          ["iPhone 16 Pro", "iPhone 16 Pro.jpeg"], ["iPhone 17 Pro Max", "iPhone 17 Pro Max.jpeg"]
+        ]
+      },
+      {
+        name: "Mariposas Glow", box: 3, price: 2.00,
+        description: "Mariposas y acentos luminosos crean una propuesta expresiva para quienes buscan destacar.",
+        folder: "Mariposas Glow",
+        models: [
+          ["iPhone 13 Pro", "iPhone 13 Pro.jpeg"], ["iPhone 14 Pro", "iPhone 14 Pro.jpeg"],
+          ["iPhone 15 Pro Max", "iPhone 15 Pro Max.jpeg"], ["iPhone 16 Normal", "iPhone 16.jpeg"],
+          ["iPhone 16 Pro", "iPhone 16 Pro.jpeg"], ["iPhone 17 Pro", "iPhone 17 Pro.jpeg"],
+          ["iPhone 17 Pro Max", "iPhone 17 Pro Max.jpeg"]
+        ]
+      },
+      {
+        name: "Cute Animals", box: 4, price: 1.75,
+        description: "Personajes y motivos animales con un tono amable, ideal para una selección juvenil y cercana.",
+        folder: "Cute Animals",
+        models: [
+          ["iPhone 13 Normal", "iPhone 13.jpeg"], ["iPhone 13 Pro", "iPhone 13 Pro.jpeg"],
+          ["iPhone 14 Normal", "iPhone 14.jpeg"], ["iPhone 14 Pro", "iPhone 14 Pro.jpeg"],
+          ["iPhone 15 Normal", "iPhone 15.jpeg"], ["iPhone 15 Pro Max", "iPhone 15 Pro Max.jpeg"],
+          ["iPhone 16 Pro", "iPhone 16 Pro.jpeg"]
+        ]
+      },
+      {
+        name: "Sunflower Rainbow", box: 5, price: 1.50,
+        description: "Girasoles y color se unen en una colección alegre, pensada para dar vida a cada mostrador.",
+        folder: "Sunflower Rainbow",
+        models: [
+          ["iPhone 13 Normal", "iPhone 13.jpeg"], ["iPhone 13 Pro Max", "iPhone 13 Pro Max.jpeg"],
+          ["iPhone 14 Pro Max", "iPhone 14 Pro Max.jpeg"], ["iPhone 15 Pro Max", "iPhone 15 Pro Max.jpeg"],
+          ["iPhone 16 Normal", "iPhone 16.jpeg"], ["iPhone 16 Pro Max", "iPhone 16 Pro Max.jpeg"]
+        ]
+      },
+      {
+        name: "Metalizado Ondulado", box: 6, price: 2.50,
+        description: "Acabado metalizado y líneas onduladas para una estética moderna, llamativa y urbana.",
+        folder: "Metalizado Ondulado",
+        models: [
+          ["iPhone 13 Pro", "iPhone 13 Pro.jpeg"], ["iPhone 14 Pro Max", "iPhone 14 Pro Max.jpeg"],
+          ["iPhone 15 Normal", "iPhone 15.jpeg"], ["iPhone 16 Pro Max", "iPhone 16 Pro Max.jpeg"]
+        ]
+      },
+      {
+        name: "Magsafe Premium", box: 7, price: 2.50,
+        description: "Línea de estética sobria y contemporánea, con identidad MagSafe según el nombre de la colección.",
+        folder: "Magsafe Premium",
+        models: [
+          ["iPhone 13 Pro", "iPhone 13 Pro.jpeg"], ["iPhone 14 Pro", "iPhone 14 Pro.jpeg"],
+          ["iPhone 15 Pro", "iPhone 15 Pro.jpeg"], ["iPhone 16 Pro", "iPhone 16 Pro.jpeg"]
+        ]
+      },
+      {
+        name: "Heart Collection", box: 8, price: 2.50,
+        description: "Detalles de corazón en una propuesta romántica y actual, pensada para regalar o coleccionar.",
+        folder: "Heart Collection",
+        models: [
+          ["iPhone 13 Pro", "iphone 13 pro.png"], ["iPhone 14 Pro", "iphone 14 pro.png"],
+          ["iPhone 15 Pro", "iphone 15 pro.png"], ["iPhone 16 Pro", "iphone 16 pro.png"]
+        ]
+      },
+      {
+        name: "Premium Fashion", box: 9, price: 2.10,
+        description: "Una alternativa elegante y versátil para clientes que prefieren una estética cuidada y sofisticada.",
+        folder: "Premium Fashion",
+        models: [
+          ["iPhone 13 Pro", "IPhone 13 Pro.jpeg"], ["iPhone 14 Pro", "iPhone 14 Pro.jpeg"],
+          ["iPhone 15 Pro", "iPhone 15 Pro.jpeg"], ["iPhone 15 Pro Max", "iPhone 15 Pro Max.jpeg"],
+          ["iPhone 16 Pro", "iPhone 16 Pro.jpeg"]
+        ]
+      },
+      {
+        name: "Spider Stitch Nike", box: 10, price: 1.50,
+        description: "Personajes y referencias deportivas en una combinación dinámica para un público de estilo casual.",
+        folder: "Spider Stitch Nike",
+        models: [
+          ["iPhone 13 Pro", "iPhone 13 Pro.png"], ["iPhone 14 Pro", "iPhone 14 Pro.png"],
+          ["iPhone 15 Pro", "iPhone 15 Pro.png"], ["iPhone 15 Pro Max", "iPhone 15 Pro max.png"],
+          ["iPhone 16 Pro", "iPhone 16 Pro.png"], ["iPhone 17 Pro", "iPhone 17 Pro.png"]
+        ]
+      }
+    ];
+
+    const imageUrl = (collection, filename) =>
+      `imagenes/${collection.folder.split("/").map(encodeURIComponent).join("/")}/${encodeURIComponent(filename)}`;
+    const money = value => value.toFixed(2);
+    const grid = document.getElementById("collection-grid");
+    const search = document.getElementById("search");
+    const sort = document.getElementById("sort");
+    const resultCount = document.getElementById("result-count");
+    const modal = document.getElementById("detail-modal");
+    const modalContent = document.getElementById("modal-content");
+    const closeButton = document.getElementById("modal-close");
+    let lastFocusedElement = null;
+
+    function renderCollections() {
+      const query = search.value.trim().toLocaleLowerCase("es");
+      const filtered = collections.filter(collection =>
+        `${collection.name} ${collection.models.map(model => model[0]).join(" ")}`.toLocaleLowerCase("es").includes(query)
+      );
+      if (sort.value === "name") filtered.sort((a, b) => a.name.localeCompare(b.name, "es"));
+      if (sort.value === "price") filtered.sort((a, b) => a.price - b.price || a.box - b.box);
+
+      resultCount.textContent = `${filtered.length} ${filtered.length === 1 ? "colección" : "colecciones"}`;
+      if (!filtered.length) {
+        grid.innerHTML = '<p class="empty-state">No encontramos diseños con esa búsqueda. Prueba con otro nombre o modelo.</p>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map(collection => `
+        <article class="card">
+          <div class="card-image">
+            <img src="${imageUrl(collection, collection.models[0][1])}" alt="${collection.name} para ${collection.models[0][0]}" loading="lazy">
+            <span class="box-badge">Caja ${collection.box}</span>
+          </div>
+          <div class="card-body">
+            <div class="card-topline"><span class="section-kicker">Colección</span><span class="model-count">${collection.models.length} modelos registrados</span></div>
+            <h3>${collection.name}</h3>
+            <p class="card-description">${collection.description}</p>
+            <div class="card-bottom">
+              <div><span class="price-label">PVP por mayor</span><span class="price">${money(collection.price)}</span></div>
+              <button class="details-button" type="button" data-detail="${collection.box}" aria-label="Ver detalle de ${collection.name}">Ver detalle&nbsp; ↗</button>
+            </div>
+          </div>
+        </article>
+      `).join("");
+      grid.querySelectorAll("[data-detail]").forEach(button =>
+        button.addEventListener("click", () => openDetails(Number(button.dataset.detail), button))
+      );
+    }
+
+    function openDetails(box, trigger) {
+      const collection = collections.find(item => item.box === box);
+      if (!collection) return;
+      lastFocusedElement = trigger;
+      modalContent.innerHTML = `
+        <section class="modal-hero">
+          <img src="${imageUrl(collection, collection.models[0][1])}" alt="${collection.name}, imagen de referencia">
+          <div class="modal-summary">
+            <div class="eyebrow">Colección · Caja ${collection.box}</div>
+            <h2 id="modal-title">${collection.name}</h2>
+            <p>${collection.description}</p>
+            <div class="modal-meta">
+              <span><strong>${money(collection.price)}</strong>PVP por mayor</span>
+              <span><strong>${collection.models.length}</strong>modelos registrados</span>
+            </div>
+          </div>
+        </section>
+        <section class="modal-content">
+          <h3>Modelos asociados</h3>
+          <p>Referencias según la base maestra. Confirma que el modelo coincida exactamente con el equipo.</p>
+          <div class="model-grid">
+            ${collection.models.map(([model, file]) => `
+              <div class="model-item">
+                <img src="${imageUrl(collection, file)}" alt="${collection.name} para ${model}" loading="lazy">
+                <span>${model}</span>
+              </div>
+            `).join("")}
+          </div>
+          <p class="modal-disclaimer">El precio no indica moneda ni vigencia en el archivo fuente. La existencia de cada referencia debe confirmarse antes de la compra.</p>
+        </section>
+      `;
+      modal.hidden = false;
+      document.body.classList.add("no-scroll");
+      closeButton.focus();
+    }
+
+    function closeDetails() {
+      if (modal.hidden) return;
+      modal.hidden = true;
+      document.body.classList.remove("no-scroll");
+      if (lastFocusedElement) lastFocusedElement.focus();
+    }
+
+    search.addEventListener("input", renderCollections);
+    sort.addEventListener("change", renderCollections);
+    closeButton.addEventListener("click", closeDetails);
+    modal.addEventListener("click", event => { if (event.target === modal) closeDetails(); });
+    document.addEventListener("keydown", event => { if (event.key === "Escape") closeDetails(); });
+    renderCollections();
+  </script>
+</body>
+</html>

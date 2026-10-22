@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orquidea Tech | 10 diseños</title>
+<style>
+  :root { --navy: #082b58; --blue: #1d64b5; --sky: #e8f2fd; --ink: #142b45; --line: #c9d9ea; }
+  * { box-sizing: border-box; }
+  @page { size: A4 landscape; margin: 0; }
+  html, body { margin: 0; padding: 0; background: #eaf1f8; color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
+  .page { width: 297mm; height: 210mm; padding: 11mm 13mm 10mm; margin: 0 auto; background: #fff; overflow: hidden; page-break-after: always; break-after: page; display: flex; flex-direction: column; }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+  .top { height: 18mm; flex: 0 0 18mm; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--blue); margin-bottom: 7mm; }
+  .brand { color: var(--navy); font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
+  .page-number { color: #607790; font-size: 10px; font-weight: 700; }
+  .products { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; }
+  .product { min-width: 0; min-height: 0; border: 1px solid var(--line); border-radius: 4mm; overflow: hidden; display: flex; flex-direction: column; background: #fff; }
+  .picture { min-height: 0; flex: 1; display: grid; place-items: center; padding: 4mm; background: linear-gradient(145deg, #f8fbff, #edf4fb); }
+  .picture img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; }
+  .details { flex: 0 0 auto; min-height: 30mm; padding: 4mm 5mm 4mm; border-top: 1px solid var(--line); }
+  .collection { color: var(--navy); font-size: 17px; font-weight: 800; line-height: 1.15; margin-bottom: 3mm; }
+  .label { color: var(--blue); font-size: 8px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1.5mm; }
+  .models { color: #344b63; font-size: 10px; line-height: 1.4; }
+  @media screen { .page { margin: 12px auto; box-shadow: 0 8px 28px rgba(8,43,88,.14); } }
+  @media print { html, body { background: white; } .page { margin: 0; box-shadow: none; } }
+</style>
+</head>
+<body>
+<main id="catalog"></main>
+<script>
+const root = '../imagenes/';
+const designs = [
+  { name: 'Cuero Bordado Flores', photo: 'Cuero Bordado Flores/iPhone 16 Pro.jpeg', models: 'iPhone 13 Pro, 14 Pro, 15 Pro, 15 Pro Max, 16 Pro, 17 Pro Max' },
+  { name: 'Cute Animals', photo: 'Cute Animals/iPhone 16 Pro.jpeg', models: 'iPhone 13, 13 Pro, 14, 14 Pro, 15, 15 Pro Max, 16 Pro' },
+  { name: 'Heart Collection', photo: 'Heart Collection/iphone 16 pro.png', models: 'iPhone 13 Pro, 14 Pro, 15 Pro, 16 Pro' },
+  { name: 'Magsafe Premium', photo: 'Magsafe Premium/iPhone 16 Pro.jpeg', models: 'iPhone 13 Pro, 14 Pro, 15 Pro, 16 Pro' },
+  { name: 'Mariposas Glow', photo: 'Mariposas Glow/iPhone 16 Pro.jpeg', models: 'iPhone 13 Pro, 14 Pro, 15 Pro Max, 16, 16 Pro, 17 Pro, 17 Pro Max' },
+  { name: 'Metalizado Ondulado', photo: 'Metalizado Ondulado/iPhone 16 Pro Max.jpeg', models: 'iPhone 13 Pro, 14 Pro Max, 15, 16 Pro Max' },
+  { name: 'Premium Fashion', photo: 'Premium Fashion/iPhone 16 Pro.jpeg', models: 'iPhone 13 Pro, 14 Pro, 15 Pro, 15 Pro Max, 16 Pro' },
+  { name: 'Spider Stitch Nike', photo: 'Spider Stitch Nike/iPhone 16 Pro.png', models: 'iPhone 13 Pro, 14 Pro, 15 Pro, 15 Pro Max, 16 Pro, 17 Pro' },
+  { name: 'Sticker Pop', photo: 'Sticker Pop/iPhone 16 Pro.jpeg', models: 'iPhone 13 Pro, 14 Pro, 15 Pro Max, 16, 16 Pro, 17 Pro, 17 Pro Max' },
+  { name: 'Sunflower Rainbow', photo: 'Sunflower Rainbow/iPhone 16 Pro Max.jpeg', models: 'iPhone 13, 13 Pro Max, 14 Pro Max, 15 Pro Max, 16, 16 Pro Max' }
+];
+const encodePath = value => value.split('/').map(encodeURIComponent).join('/');
+const card = item => `<article class="product"><div class="picture"><img src="${root + encodePath(item.photo)}" alt="${item.name}" onerror="this.alt='No se pudo cargar la foto';this.style.display='none'"></div><div class="details"><div class="collection">${item.name}</div><div class="label">Referencias disponibles</div><div class="models">${item.models}</div></div></article>`;
+const pages = [];
+for (let index = 0; index < designs.length; index += 2) {
+  const page = Math.floor(index / 2) + 1;
+  pages.push(`<section class="page"><header class="top"><div class="brand">Orquidea Tech · catálogo de diseños</div><div class="page-number">${page} / 5</div></header><div class="products">${card(designs[index])}${card(designs[index + 1])}</div></section>`);
+}
+document.getElementById('catalog').innerHTML = pages.join('');
+</script>
+</body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orquidea Tech | Portafolio</title>
+    <style>
+      :root {
+        --azul-1: #071a38;
+        --azul-2: #0e3a7a;
+        --azul-3: #1e5fcf;
+        --azul-4: #5ca9ff;
+        --azul-5: #dfeeff;
+        --texto: #182338;
+        --gris: #edf3fb;
+        --blanco: #ffffff;
+        --negro: #0b1320;
+        --sombra: 0 14px 32px rgba(10, 42, 88, 0.18);
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(180deg, #eef6ff 0%, #dfeeff 100%);
+        color: var(--texto);
+      }
+
+      body {
+        padding: 0;
+      }
+
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        background: #f7fbff;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero {
+        position: relative;
+        background: linear-gradient(135deg, var(--azul-1) 0%, var(--azul-2) 40%, var(--azul-3) 100%);
+        color: var(--blanco);
+        padding: 28mm 18mm 20mm;
+        min-height: 150mm;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top right, rgba(92,169,255,0.4), transparent 32%);
+      }
+
+      .hero-inner {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 18mm;
+        align-items: center;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        background: rgba(255,255,255,0.12);
+        border: 1px solid rgba(255,255,255,0.25);
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      h1 {
+        margin: 16px 0 12px;
+        font-size: 42px;
+        line-height: 1.03;
+        letter-spacing: -1px;
+      }
+
+      .subtitle {
+        font-size: 18px;
+        color: rgba(255,255,255,0.8);
+        line-height: 1.6;
+        max-width: 34rem;
+      }
+
+      .chips {
+        margin-top: 18px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .chip {
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.14);
+        border-radius: 999px;
+        padding: 8px 12px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+      }
+
+      .hero-visual {
+        background: rgba(255,255,255,0.07);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 22px;
+        padding: 12px;
+        box-shadow: var(--sombra);
+      }
+
+      .collage {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .collage img {
+        width: 100%;
+        height: 104px;
+        object-fit: cover;
+        border-radius: 14px;
+        display: block;
+        border: 2px solid rgba(255,255,255,0.15);
+      }
+
+      .collage .wide {
+        grid-column: 1 / -1;
+        height: 120px;
+      }
+
+      .section {
+        padding: 14mm 18mm 0;
+      }
+
+      .heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 26px;
+        color: var(--azul-1);
+        letter-spacing: -0.5px;
+      }
+
+      .tag {
+        color: var(--azul-3);
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .card {
+        background: var(--blanco);
+        border: 1px solid rgba(13, 59, 130, 0.08);
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 8px 22px rgba(11, 35, 71, 0.08);
+      }
+
+      .card img {
+        display: block;
+        width: 100%;
+        height: 170px;
+        object-fit: cover;
+      }
+
+      .card-body {
+        padding: 14px 16px 16px;
+      }
+
+      .card h3 {
+        margin: 0 0 6px;
+        font-size: 18px;
+        color: var(--azul-1);
+      }
+
+      .card p {
+        margin: 0;
+        font-size: 12px;
+        line-height: 1.5;
+        color: rgba(24, 35, 56, 0.75);
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 12px;
+      }
+
+      .stat {
+        background: linear-gradient(180deg, #eff6ff 0%, #dfeeff 100%);
+        border: 1px solid rgba(30, 95, 207, 0.14);
+        border-radius: 16px;
+        padding: 16px 14px;
+        text-align: center;
+      }
+
+      .stat strong {
+        display: block;
+        color: var(--azul-2);
+        font-size: 24px;
+        margin-bottom: 6px;
+      }
+
+      .stat span {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--azul-1);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 16px;
+        margin-top: 16px;
+      }
+
+      .feature-box {
+        background: var(--blanco);
+        border: 1px solid rgba(13, 59, 130, 0.08);
+        border-radius: 18px;
+        padding: 18px 18px;
+        box-shadow: 0 8px 22px rgba(11, 35, 71, 0.08);
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--texto);
+      }
+
+      li {
+        margin: 9px 0;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .contact {
+        background: linear-gradient(135deg, var(--azul-1) 0%, var(--azul-2) 100%);
+        color: var(--blanco);
+        border-radius: 20px;
+        padding: 18px;
+        min-height: 180px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .contact::before {
+        content: "";
+        position: absolute;
+        top: -50px;
+        right: -40px;
+        width: 140px;
+        height: 140px;
+        background: rgba(255,255,255,0.08);
+        border-radius: 50%;
+      }
+
+      .contact h3 {
+        position: relative;
+        z-index: 1;
+        margin: 0 0 12px;
+        font-size: 24px;
+      }
+
+      .contact p {
+        position: relative;
+        z-index: 1;
+        margin: 0 0 8px;
+        font-size: 13px;
+        line-height: 1.7;
+        color: rgba(255,255,255,0.85);
+      }
+
+      .footer {
+        margin-top: 18px;
+        padding: 0 18mm 12mm;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: rgba(24, 35, 56, 0.75);
+        font-size: 11px;
+        letter-spacing: 0.4px;
+      }
+
+      @media print {
+        body {
+          background: white;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <section class="hero">
+        <div class="hero-inner">
+          <div>
+            <div class="eyebrow">Portafolio premium</div>
+            <h1>ORQUIDEA<br />TECH</h1>
+            <div class="subtitle">
+              Colecciones modernas en accesorios, tecnología y diseño para clientes que buscan
+              estilo, funcionalidad y valor premium.
+            </div>
+            <div class="chips">
+              <span class="chip">MAYORISTA</span>
+              <span class="chip">DISEÑO</span>
+              <span class="chip">ACCESORIOS</span>
+              <span class="chip">PREMIUM</span>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="collage">
+              <img class="wide" src="file:///C:/Users/XPERT/Documents/Catalogo Orquidea Tech/imagenes/Premium%20Fashion/iPhone%2015%20Pro.jpeg" alt="Premium Fashion" />
+              <img src="file:///C:/Users/XPERT/Documents/Catalogo%20Orquidea%20Tech/imagenes/Heart%20Collection/iphone%2014%20pro.png" alt="Heart Collection" />
+              <img src="file:///C:/Users/XPERT/Documents/Catalogo%20Orquidea%20Tech/imagenes/Cuero%20Bordado%20Flores/iPhone%2015%20Pro.jpeg" alt="Cuero Bordado Flores" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="heading">
+          <h2>Colecciones principales</h2>
+          <div class="tag">Catálogo destacado</div>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <img src="file:///C:/Users/XPERT/Documents/Catalogo%20Orquidea%20Tech/imagenes/Cuero%20Bordado%20Flores/iPhone%2015%20pro%20Max.jpeg" alt="Cuero Bordado Flores" />
+            <div class="card-body">
+              <h3>Cuero Bordado Flores</h3>
+              <p>Estilo artesanal, acabados florales y líneas premium para presentaciones exclusivas.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="file:///C:/Users/XPERT/Documents/Catalogo%20Orquidea%20Tech/imagenes/Premium%20Fashion/iPhone%2016%20Pro.jpeg" alt="Premium Fashion" />
+            <div class="card-body">
+              <h3>Premium Fashion</h3>
+              <p>Propuesta elegante con tonalidades sofisticadas y acabados contemporáneos.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="file:///C:/Users/XPERT/Documents/Catalogo%20Orquidea%20Tech/imagenes/Heart%20Collection/iphone%2016%20pro.png" alt="Heart Collection" />
+            <div class="card-body">
+              <h3>Heart Collection</h3>
+              <p>Un universo romántico y moderno enfocado en detalles visuales impactantes.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="file:///C:/Users/XPERT/Documents/Catalogo%20Orquidea%20Tech/imagenes/Magsafe%20Premium/iPhone%2014%20Pro.jpeg" alt="Magsafe Premium" />
+            <div class="card-body">
+              <h3>Magsafe Premium</h3>
+              <p>Soluciones funcionales y modernas para usuarios que buscan compatibilidad y diseño.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="file:///C:/Users/XPERT/Documents/Catalogo%20Orquidea%20Tech/imagenes/Metalizado%20Ondulado/iPhone%2013%20Pro.jpeg" alt="Metalizado Ondulado" />
+            <div class="card-body">
+              <h3>Metalizado Ondulado</h3>
+              <p>Acabados brillantes y texturas dinámicas para destacar la identidad de marca.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="file:///C:/Users/XPERT/Documents/Catalogo%20Orquidea%20Tech/imagenes/Sticker%20Pop/iPhone%2015%20Pro.jpeg" alt="Sticker Pop" />
+            <div class="card-body">
+              <h3>Sticker Pop</h3>
+              <p>Visuales llamativos y versátiles para un catálogo atractivo y fácil de vender.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="heading">
+          <h2>Resumen comercial</h2>
+          <div class="tag">Indicadores</div>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><strong>10</strong><span>colecciones</span></div>
+          <div class="stat"><strong>+30</strong><span>modelos</span></div>
+          <div class="stat"><strong>4</strong><span>líneas</span></div>
+          <div class="stat"><strong>100%</strong><span>moderno</span></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="features">
+          <div class="feature-box">
+            <div class="heading" style="margin-bottom: 8px;">
+              <h2 style="font-size: 22px;">Qué incluye este portafolio</h2>
+            </div>
+            <ul>
+              <li>Presentación visual de las colecciones más demandadas para reforzar la propuesta comercial.</li>
+              <li>Diseño premium orientado a mayoristas, distribuidores y clientes finales con interés en estilo.</li>
+              <li>Paleta azul institucional que transmite confianza, tecnología y modernidad.</li>
+              <li>Estructura clara para exhibir productos, categorías y valores visuales de la marca.</li>
+            </ul>
+          </div>
+
+          <div class="contact">
+            <h3>Orquidea Tech</h3>
+            <p>Portafolio actualizado con estilo premium.</p>
+            <p>Rubro: accesorios, accesorios para celular y productos de diseño.</p>
+            <p>Presentación enfocada en catálogo visual y comercial.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer">
+        <span>Orquidea Tech</span>
+        <span>Portafolio azul · catálogo premium</span>
+      </div>
+    </div>
+  </body>
+</html>

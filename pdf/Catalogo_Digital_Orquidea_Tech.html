@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catalogo Digital | Orquidea Tech</title>
+<style>
+  :root { --navy: #082b58; --blue: #155eb6; --sky: #dceeff; --ink: #10243d; --paper: #f4f8fc; }
+  * { box-sizing: border-box; }
+  @page { size: A4 landscape; margin: 0; }
+  html, body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; color: var(--ink); background: #eaf1f8; }
+  .page { width: 297mm; height: 210mm; margin: 0 auto; overflow: hidden; position: relative; page-break-after: always; break-after: page; background: var(--paper); }
+  .cover { color: white; background: linear-gradient(125deg, #071a38 0%, #0e3a7a 55%, #2875ce 100%); padding: 20mm 23mm; display: flex; flex-direction: column; justify-content: space-between; }
+  .cover::before { content: ''; position: absolute; inset: 0 0 0 56%; background: linear-gradient(140deg, transparent 0 48%, rgba(255,255,255,.06) 48% 49%, transparent 49%), radial-gradient(ellipse at 80% 42%, rgba(95,177,255,.26), transparent 48%); }
+  .cover-top, .cover-bottom { position: relative; z-index: 1; }
+  .brand { text-transform: uppercase; letter-spacing: 5px; font-weight: 700; font-size: 13px; color: #c8e2ff; }
+  .cover h1 { margin: 24mm 0 6mm; font-size: 54px; line-height: 1; letter-spacing: 1px; }
+  .cover .sub { max-width: 145mm; color: #deedff; font-size: 19px; line-height: 1.5; }
+  .cover-rule { margin-top: 11mm; width: 34mm; height: 3px; background: #70bcff; }
+  .cover-bottom { display: flex; align-items: end; justify-content: space-between; color: #d5e9ff; font-size: 12px; }
+  .cover-count { font-size: 14px; font-weight: 700; }
+  .product { display: grid; grid-template-rows: 27mm 1fr 20mm; padding: 0 13mm 5mm; }
+  .product-head { margin: 0 -13mm; padding: 0 13mm; display: flex; justify-content: space-between; align-items: center; color: white; background: var(--navy); }
+  .product-head .brand { font-size: 10px; letter-spacing: 2px; }
+  .collection { font-size: 20px; font-weight: 700; margin-top: 3px; }
+  .counter { border: 1px solid rgba(255,255,255,.42); border-radius: 20px; padding: 7px 12px; font-size: 11px; letter-spacing: .6px; }
+  .photo-wrap { min-height: 0; display: grid; place-items: center; padding: 6mm 1mm 4mm; }
+  .photo { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; }
+  .product-foot { border-top: 1px solid #cbd9e8; display: flex; justify-content: space-between; align-items: center; padding: 3mm 1mm 0; }
+  .model-label { color: #54718e; font-size: 9px; text-transform: uppercase; letter-spacing: 1.6px; }
+  .model { color: var(--navy); font-weight: 700; font-size: 17px; margin-top: 2px; }
+  .foot-brand { color: var(--blue); font-size: 10px; font-weight: 700; letter-spacing: 1px; }
+  .error { color: #a00; font-size: 14px; padding: 30px; }
+  @media screen { .page { margin: 12px auto; box-shadow: 0 8px 32px rgba(8,43,88,.15); } }
+  @media print { html, body { background: white; } .page { margin: 0; box-shadow: none; } }
+</style>
+</head>
+<body>
+<main id="catalog"></main>
+<script>
+const root = '../imagenes/';
+const groups = [
+  ['Cuero Bordado Flores', ['iPhone 13 Pro.jpeg', 'iPhone 14 Pro.jpeg', 'iPhone 15 pro Max.jpeg', 'iPhone 15 Pro.jpeg', 'iPhone 16 Pro.jpeg', 'iPhone 17 Pro Max.jpeg']],
+  ['Cute Animals', ['iPhone 13 Pro.jpeg', 'iPhone 13.jpeg', 'iPhone 14 Pro.jpeg', 'iPhone 14.jpeg', 'iPhone 15 Pro Max.jpeg', 'iPhone 15.jpeg', 'iPhone 16 Pro.jpeg']],
+  ['Heart Collection', ['iphone 13 pro.png', 'iphone 14 pro.png', 'iphone 15 pro.png', 'iphone 16 pro.png']],
+  ['Magsafe Premium', ['iPhone 13 Pro.jpeg', 'iPhone 14 Pro.jpeg', 'iPhone 15 Pro.jpeg', 'iPhone 16 Pro.jpeg']],
+  ['Mariposas Glow', ['iPhone 13 Pro.jpeg', 'iPhone 14 Pro.jpeg', 'iPhone 15 Pro Max.jpeg', 'iPhone 16 Pro.jpeg', 'iPhone 16.jpeg', 'iPhone 17 Pro Max.jpeg', 'iPhone 17 Pro.jpeg']],
+  ['Metalizado Ondulado', ['iPhone 13 Pro.jpeg', 'iPhone 14 Pro Max.jpeg', 'iPhone 15.jpeg', 'iPhone 16 Pro Max.jpeg']],
+  ['Premium Fashion', ['IPhone 13 Pro.jpeg', 'iPhone 14 Pro.jpeg', 'iPhone 15 Pro Max.jpeg', 'iPhone 15 Pro.jpeg', 'iPhone 16 Pro.jpeg']],
+  ['Spider Stitch Nike', ['iPhone 13 Pro.png', 'iPhone 14 Pro.png', 'iPhone 15 Pro max.png', 'iPhone 15 Pro.png', 'iPhone 16 Pro.png', 'iPhone 17 Pro.png']],
+  ['Sticker Pop', ['iPhone 13 Pro.jpeg', 'iPhone 14 Pro.jpeg', 'iPhone 15 Pro Max.jpeg', 'iPhone 16 Pro.jpeg', 'iPhone 16.jpeg', 'iPhone 17 Pro Max.jpeg', 'iPhone 17 Pro.jpeg']],
+  ['Sunflower Rainbow', ['iPhone 13 Pro Max.jpeg', 'iPhone 13.jpeg', 'iPhone 14 Pro Max.jpeg', 'iPhone 15 Pro Max.jpeg', 'iPhone 16 Pro Max.jpeg', 'iPhone 16.jpeg']]
+];
+const products = groups.flatMap(([collection, files]) => files.map(file => ({ collection, file })));
+const pages = [`<section class="page cover"><div class="cover-top"><div class="brand">Orquidea Tech</div><div class="cover-rule"></div><h1>CATÁLOGO<br>DIGITAL</h1><div class="sub">Colecciones de fundas para iPhone<br>Diseños y modelos disponibles</div></div><div class="cover-bottom"><span>Catálogo de productos</span><span class="cover-count">${products.length} diseños · ${groups.length} colecciones</span></div></section>`];
+for (const [index, product] of products.entries()) {
+  const imageUrl = root + encodeURIComponent(product.collection) + '/' + encodeURIComponent(product.file);
+  const model = product.file.replace(/\.(jpeg|png)$/i, '').replace(/^iPhone/i, 'iPhone');
+  pages.push(`<section class="page product"><header class="product-head"><div><div class="brand">Orquidea Tech · Colección</div><div class="collection">${product.collection}</div></div><div class="counter">DISEÑO ${String(index + 1).padStart(2, '0')} / ${products.length}</div></header><div class="photo-wrap"><img class="photo" src="${imageUrl}" alt="${product.collection} para ${model}" onerror="this.outerHTML='<div class=\'error\'>No se pudo cargar la fotografía: ${imageUrl}</div>'"></div><footer class="product-foot"><div><div class="model-label">Modelo compatible</div><div class="model">${model}</div></div><div class="foot-brand">ORQUIDEA TECH</div></footer></section>`);
+}
+document.getElementById('catalog').innerHTML = pages.join('');
+</script>
+</body>
+</html>
